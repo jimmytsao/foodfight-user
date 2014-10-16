@@ -96,7 +96,7 @@ gulp.task('browser-sync', function() {
 gulp.task('templateCache', function(){
 	gulp
     .src(paths.htmlTemplates.src)
-		.pipe(templateCache(paths.templateCacheName,{module: paths.ngAppName}))
+		.pipe(templateCache(paths.htmlTemplates.templateCacheName,{module: paths.ngAppName}))
 		.pipe(gulp.dest(paths.htmlTemplates.dest));
 });
 
