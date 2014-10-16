@@ -4,13 +4,14 @@ var gulp          = require('gulp');
 var templateCache = require('gulp-angular-templatecache');
 var browserify    = require('gulp-browserify');
 var jshint        = require('gulp-jshint');
-var connect       = require('gulp-connect');
 var sass          = require('gulp-sass');
 var autoprefixer  = require('gulp-autoprefixer');
 var clean         = require('gulp-clean');
 var karma         = require('gulp-karma');
 var protractor    = require('gulp-protractor').protractor;
 var shell         = require('gulp-shell');
+var browserSync   = require('browser-sync');
+var reload        = browserSync.reload;
 
 /*******************************************************
  *            File Paths and Values
@@ -48,11 +49,6 @@ var paths = {
     dest: 'client/ionic/www'
   },
 
-  serverScripts: {
-    //Server side scripts
-    src: ['./server.js', 'server/**/*.js']
-  },
-
   //Location of files to serve for livereload
   livereloadRoot: 'client/ionic/www',
 
@@ -62,24 +58,16 @@ var paths = {
   //Name of main app module in main client js file
   ngAppName: 'app',
 
-  //Main js file server side
-  mainServerAppFile: 'server.js',
-
-  //Nodemon files to not watch
-  nodemonIgnoreFiles: ['node_modules/**/*.js', 'client/**/*.js'],
-
   publicPathsToClean: ['client/ionic/www/**/*.html', 'client/ionic/www/**/*.js', 'client/ionic/www/**/*.css', '!client/ionic/www/ionic.bundle.js'],
 
   buildPathsToClean: ['client/ionic/platforms/**/*'],
-
-  serverSideMochaTestFiles: ['server/**/*.unit.test.js'],
 
   karmaTestFiles: ['client/app/**/*.unit.test.js'],
 
   karmaConfigFile: 'client/app/config/karma.config.js',
 
 
-//Protractor Setup
+//Protractor Setup - (taken care of if you use npm run-script setup)
 //Make sure you update the webdriver-manager after a clean npm install (it will add the Jar file and chrome driver):
 //  ./node_modules/protractor/bin/webdriver-manager update
 //Make sure the line 28 in the protractor config file is pointing to the right Jar file
@@ -96,11 +84,11 @@ var paths = {
  *            Client Side Build Tasks 
  ******************************************************/
 
-//Gulp connect
-gulp.task('connect', function() {
-  connect.server({
-    root: paths.livereloadRoot,
-    livereload: true
+gulp.task('browser-sync', function() {
+  browserSync({
+    server: {
+      baseDir: paths.clientScripts.dest
+    }
   });
 });
 
@@ -118,7 +106,7 @@ gulp.task('browserify', function(){
     .src([paths.mainClientAppFile])
     .pipe(browserify())
     .pipe(gulp.dest(paths.clientScripts.dest))
-    .pipe(connect.reload());
+    .pipe(reload({stream:true}));
 });
 
 //Lint files with jshint
@@ -130,8 +118,9 @@ gulp.task('clientLint', function(){
 
 });
 
+
 //Watch files and recompile when changes occur
-gulp.task('clientWatch', function(){
+gulp.task('clientWatch', ['browser-sync'],function(){
   gulp.watch(paths.clientScripts.src, ['clientLint', 'browserify']);
   gulp.watch(paths.htmlTemplates.src, ['templateCache', 'browserify']);
   gulp.watch(paths.sassFiles.src, ['styles']);
@@ -143,7 +132,7 @@ gulp.task('index', function() {
   gulp
     .src(paths.index.src)
     .pipe(gulp.dest(paths.index.dest))
-    .pipe(connect.reload());
+    .pipe(reload({stream:true}));
 });
 
 //Compile styles
@@ -155,7 +144,7 @@ gulp.task('styles', function() {
     // Optionally add autoprefixer
     .pipe(autoprefixer("last 2 versions", "> 1%"))
     .pipe(gulp.dest(paths.sassFiles.dest))
-    .pipe(connect.reload());
+    .pipe(reload({stream:true}));
 });
 
 //Delete Public Files
@@ -189,8 +178,8 @@ gulp.task('protractor', function(){
  ******************************************************/
 
 //Delete Ionic Platform Files
+gulp.task('test', ['clientWatch']);
 gulp.task('buildIos', shell.task(['npm run-script rebuild']));
-gulp.task('clientBuildTasks', ['clean', 'connect', 'clientLint', 'templateCache', 'browserify', 'styles', 'index', 'clientWatch']);
-gulp.task('serverBuildTasks', ['serverLint', 'serverUnitTests', 'serve']);
+gulp.task('clientBuildTasks', ['clean', 'clientLint', 'templateCache', 'browserify', 'styles', 'index', 'clientWatch']);
 gulp.task('clientTestingTasks', ['karma', 'protractor']);
 gulp.task('default', ['clientBuildTasks']);
