@@ -5,16 +5,22 @@
   angular
     .module('app', [
       'ionic',
-      'restangular'])
+      'restangular',
+      'app.login'])
     .config(['$urlRouterProvider', configureDefaultRoute])
     .run(['$ionicPlatform', configureIonicComponents]);
+
+  //app modules
+  require('./modules/templateCache.js');
+  require('./modules/login/login.js');
 
   //library modules
   window._ = require('lodash');
   require('restangular');
 
+  //function declarations
   function configureDefaultRoute($urlRouterProvider){
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/login');
   }
 
   function configureIonicComponents($ionicPlatform){
