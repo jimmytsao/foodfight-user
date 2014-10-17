@@ -21,7 +21,7 @@ var reload        = browserSync.reload;
 var paths = {
   clientScripts: {
     //All js files except the compiled templateCache.js file
-    src: ['client/app/**/*.js', '!client/app/modules/templateCache.js', '!client/app/lib/**/*.js'],
+    src: ['client/app/**/*.js', '!client/app/modules/templateCache.js', '!client/app/lib/**/*.js', '!client/app/ionic.bundle.js'],
     //Destination of browserified files
     dest: 'client/ionic/www'
   },
