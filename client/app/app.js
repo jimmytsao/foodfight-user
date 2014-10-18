@@ -6,13 +6,14 @@
   
   angular
     .module('app', [
-      'ionic',
+      'app.common',
       'app.login'])
     .config(configureDefaultRoute)
     .run(configureIonicComponents);
 
   //app modules
   require('./modules/templateCache.js');
+  require('./modules/common/common.js');
   require('./modules/login/login.js');
 
   //function declarations
