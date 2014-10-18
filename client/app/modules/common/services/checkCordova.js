@@ -6,15 +6,15 @@
     .module('app.common.service.checkCordova', [])
     .factory('checkCordova', checkCordovaService);
 
-    checkCordovaService.$inject = ['$document'];
+    checkCordovaService.$inject = [];
 
-    function checkCordovaService($document){
+    function checkCordovaService(){
 
       var service = {
         isCordovaDevice: false
       };
 
-      $document.addEventListener('deviceready', devicereadyCallback, false);
+      document.addEventListener('deviceready', devicereadyCallback, false);
 
       return service;
      

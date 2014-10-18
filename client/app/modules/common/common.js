@@ -7,5 +7,5 @@
       'ionic',
       'app.common.service.checkCordova']);
 
-  require('./services/isCordovaDevice.js');
+  require('./services/checkCordova.js');
 })();
