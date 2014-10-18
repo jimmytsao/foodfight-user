@@ -5,6 +5,7 @@
   angular
     .module('app.login.values', [])
     .value('loginEndPoints',{
-      signIn: 'http://localhost:8000/'
+      fbLoginRedirectCordova: 'http://localhost:8000/auth/fb/login/cordova',
+      fbLoginRedirectNonCordova: 'http://localhost:8000/auth/fb/login/noncordova'
     });
 })();

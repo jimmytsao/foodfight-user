@@ -6,7 +6,9 @@
     .module('app.login.controller', [])
     .controller('LoginController', LoginController);
 
-  function LoginController(){
-    console.log('Login Controller');
+  LoginController.$inject = ['LoginApis'];
+
+  function LoginController(LoginApis){
+    this.fbLogin = LoginApis.fbLoginRedirect;
   }
 })();
