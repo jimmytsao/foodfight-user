@@ -4,7 +4,7 @@
 
   angular
     .module('app.login.controller', [])
-    .controller('LoginController', [LoginController]);
+    .controller('LoginController', LoginController);
 
   function LoginController(){
     console.log('Login Controller');

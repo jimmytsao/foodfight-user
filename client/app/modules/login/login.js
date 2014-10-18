@@ -7,13 +7,15 @@
       'restangular',
       'app.login.controller',
       'app.login.values'])
-    .config(['$stateProvider', configureLoginStates]);
+    .config(configureLoginStates);
 
   //app modules
   require('./login.controller.js');
   require('./login.values.js');
 
   //function declarations
+  configureLoginStates.$inject = ['$stateProvider'];
+
   function configureLoginStates($stateProvider){
     $stateProvider
       .state('login', {

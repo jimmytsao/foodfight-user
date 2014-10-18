@@ -8,18 +8,21 @@
     .module('app', [
       'ionic',
       'app.login'])
-    .config(['$urlRouterProvider', configureDefaultRoute])
-    .run(['$ionicPlatform', configureIonicComponents]);
+    .config(configureDefaultRoute)
+    .run(configureIonicComponents);
 
   //app modules
   require('./modules/templateCache.js');
   require('./modules/login/login.js');
 
   //function declarations
+  configureDefaultRoute.$inject = ['$urlRouterProvider'];
+  
   function configureDefaultRoute($urlRouterProvider){
     $urlRouterProvider.otherwise('/login');
   }
 
+  configureIonicComponents.$inject = ['$ionicPlatform'];
   function configureIonicComponents($ionicPlatform){
    // $ionicPlatform.ready(function(){
    //    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
