@@ -178,7 +178,7 @@ gulp.task('protractor', function(){
  ******************************************************/
 
 //Delete Ionic Platform Files
-gulp.task('test', ['clientWatch']);
+gulp.task('test', ['karma']);
 gulp.task('buildIos', shell.task(['npm run-script rebuild']));
 gulp.task('clientBuildTasks', ['clean', 'clientLint', 'templateCache', 'browserify', 'styles', 'index', 'clientWatch']);
 gulp.task('clientTestingTasks', ['karma', 'protractor']);
