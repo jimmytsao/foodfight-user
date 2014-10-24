@@ -23,7 +23,8 @@ var paths = {
     //All js files except the compiled templateCache.js file
     src: ['client/app/**/*.js', '!client/app/modules/templateCache.js', '!client/app/lib/**/*.js', '!client/app/ionic.bundle.js'],
     //Destination of browserified files
-    dest: 'client/ionic/www'
+    // dest: 'client/ionic/www'
+    dest: '../server/public/'
   },
 
   htmlTemplates: {
@@ -39,18 +40,22 @@ var paths = {
     //Location of index.html file
     src: ['client/app/index.html'],
     //Public location of index.html file
-    dest: 'client/ionic/www'
+    // dest: 'client/ionic/www'
+    dest: '../server/public/'
+
   },
 
   sassFiles: {
     //sassfiles
     src: ['client/app/**/*.scss'],
     mainSrc: ['client/app/styles.scss'],
-    dest: 'client/ionic/www'
+    // dest: 'client/ionic/www'
+    dest: '../server/public/'
   },
 
   //Location of files to serve for livereload
-  livereloadRoot: 'client/ionic/www',
+  // livereloadRoot: 'client/ionic/www',
+  livereloadRoot: '../server/public',
 
   //Main js file client side
   mainClientAppFile: 'client/app/app.js',
