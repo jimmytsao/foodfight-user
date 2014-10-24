@@ -6,9 +6,14 @@
     .module('app.login.controller', [])
     .controller('LoginController', LoginController);
 
-  LoginController.$inject = ['LoginApis'];
+  LoginController.$inject = ['LoginApis', 'fbAuth'];
 
-  function LoginController(LoginApis){
-    this.fbLogin = LoginApis.fbLoginRedirect;
+  function LoginController(LoginApis, fbAuth){
+    this.fbLogin = processFbLogin;
+
+    function processFbLogin(){
+      return fbAuth.login()
+      .then(fbAuth.sendAuthCode);
+    }
   }
 })();
